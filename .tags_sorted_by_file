@@ -1,0 +1,42 @@
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+client	client.php	/^$client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC); \/\/异步非阻塞$/;"	v
+data	client.php	/^\/\/ $data = $client->recv();$/;"	v
+client	client1.php	/^$client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);$/;"	v
+data	client1.php	/^\/\/ $data = $client->recv();$/;"	v
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+data	http_websocket.php	/^    $data = $frame->data;$/;"	v
+fd	http_websocket.php	/^		$fd = $frame->fd;$/;"	v
+fd	http_websocket.php	/^		$fd = ($fd>=$frame->fd)?$fd:$frame->fd;$/;"	v
+res	http_websocket.php	/^        $res = 'data  is '.$data  . '  pid = ' . $i."\\n";$/;"	v
+server	http_websocket.php	/^$server = new swoole_websocket_server("0.0.0.0", 9501);$/;"	v
+callback_function	process.php	/^function callback_function(swoole_process $worker){$/;"	f
+pid	process.php	/^$pid = $process->start();$/;"	v
+process	process.php	/^$process = new swoole_process("callback_function",true);$/;"	v
+client	redis_client.php	/^$client = new swoole_redis;$/;"	v
+client	redis_swoole.php	/^$client = new swoole_redis;$/;"	v
+more	redis_swoole.php	/^        $more = true;$/;"	v
+more	redis_swoole.php	/^    static $more = false;$/;"	v
+data	server.php	/^  \/\/   $data = $frame->data;$/;"	v
+fd	server.php	/^	\/\/ 	$fd = $frame->fd;$/;"	v
+fd	server.php	/^	\/\/ 	$fd = ($fd>=$frame->fd)?$fd:$frame->fd;$/;"	v
+getUserList	server.php	/^public function getUserList(){$/;"	f
+redis	server.php	/^$redis = new swoole_redis();$/;"	v
+res	server.php	/^	 \/\/    $res = 'data  is '.$data.'fd = '.$i."\\n";$/;"	v
+serv	server.php	/^\/\/ $serv = new swoole_server("127.0.0.1", 9501);$/;"	v
+server	server.php	/^$server = new swoole_websocket_server("0.0.0.0", 9501);$/;"	v
+serv	server1.php	/^$serv = new swoole_server("127.0.0.1", 9501);$/;"	v
+data	server2.php	/^    $data = $frame->data;$/;"	v
+m	server2.php	/^    $m = file_get_contents( __DIR__ .'\/log.txt');$/;"	v
+serv	server2.php	/^\/\/ $serv = new swoole_server("127.0.0.1", 9501);$/;"	v
+server	server2.php	/^$server = new swoole_websocket_server("0.0.0.0", 9502);$/;"	v
+content	swoole_http_server.php	/^			$content = file_get_contents($filename);$/;"	v
+content	swoole_http_server.php	/^			$content = ob_get_contents();$/;"	v
+ext	swoole_http_server.php	/^		$ext = pathinfo($request->server['PATH_INFO'],PATHINFO_EXTENSION);$/;"	v
+filename	swoole_http_server.php	/^	$filename = __DIR__.$pathinfo;$/;"	v
+http	swoole_http_server.php	/^$http = new swoole_http_server('0.0.0.0',9502);$/;"	v
+mimes	swoole_http_server.php	/^			$mimes  = include('mimes.php');$/;"	v
+pathinfo	swoole_http_server.php	/^	$pathinfo = $request->server['path_info'];$/;"	v

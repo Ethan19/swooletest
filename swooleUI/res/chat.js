@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://192.168.169.184:9501");
+var ws = new WebSocket("ws://192.168.169.184:9502");
 var client_id = 0;
 var userlist = {};
 var GET = getRequest();
@@ -34,56 +34,56 @@ function listenEvent() {
      */
     ws.onopen = function (e) {
         //必须的输入一个名称和一个图像才可以聊天
-        if (GET['name'] == undefined || GET['avatar'] == undefined) {
+        //if (GET['name'] == undefined || GET['avatar'] == undefined) {
             //alert('必须的输入一个名称和一个图像才可以聊天');
             //ws.close();
             //return false;
-        }
+        //}
         //连接成功
         console.log("connect webim server success.");
         //发送登录信息
         msg = new Object();
         msg.cmd = 'login';
-        msg.name = GET['name'];
-        msg.avatar = GET['avatar'];
+        // msg.name = GET['name'];
+        // msg.avatar = GET['avatar'];
         ws.send($.toJSON(msg));
     };
 
     //有消息到来时触发
     ws.onmessage = function (e) {
-        var message = $.evalJSON(e.data);
-        var cmd = message.cmd;
-        if (cmd == 'login')
-        {
-            client_id = $.evalJSON(e.data).fd;
-            //获取在线列表
-            ws.send($.toJSON({cmd : 'getOnline'}));
-            //获取历史记录
-            ws.send($.toJSON({cmd : 'getHistory'}));
+        //console.log(e);
+        //var message = $.evalJSON(e.data);
+        //var cmd = message.cmd;
+        //if (cmd == 'login')
+        //{
+        //client_id = $.evalJSON(e.data).fd;
+        //获取在线列表
+        //ws.send($.toJSON({cmd : 'getOnline'}));
+        //获取历史记录
             //alert( "收到消息了:"+e.data );
-        }
-        else if (cmd == 'getOnline')
-        {
-            //showOnlineList(message);
-        }
-        else if (cmd == 'getHistory')
-        {
-            //showHistory(message);
-        }
-        else if (cmd == 'newUser')
-        {
-            //showNewUser(message);
-        }
-        else if (cmd == 'fromMsg')
-        {
-            //showNewMsg(message);
-        }
-        else if (cmd == 'offline')
-        {
-            //var cid = message.fd;
-            //delUser(cid);
-            //showNewMsg(message);
-        }
+        //}
+        // else if (cmd == 'getOnline')
+        // {
+        //     //showOnlineList(message);
+        // }
+        // else if (cmd == 'getHistory')
+        // {
+        //     //showHistory(message);
+        // }
+        // else if (cmd == 'newUser')
+        // {
+        //     //showNewUser(message);
+        // }
+        // else if (cmd == 'fromMsg')
+        // {
+        //     //showNewMsg(message);
+        // }
+        // else if (cmd == 'offline')
+        // {
+        //     //var cid = message.fd;
+        //     //delUser(cid);
+        //     //showNewMsg(message);
+        // }
     };
 
     /**
@@ -331,7 +331,7 @@ function sendMsg(content, type) {
         msg.from = client_id;
         msg.channal = 0;
         msg.data = content;
-        msg.type = type;
+        // msg.type = type;
         ws.send($.toJSON(msg));
     }
     else {

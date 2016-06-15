@@ -3,7 +3,7 @@ $client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC); //异步非阻�
 
 $client->on("connect", function($cli) {
     echo "connected\n";
-    $cli->send("hello world\n");
+    $cli->send("select * from user");
 });
 
 $client->on("receive", function($cli, $data) {
@@ -13,7 +13,7 @@ $client->on("receive", function($cli, $data) {
     } else {
         echo "received: $data\n";
         sleep(1);
-        $cli->send("hello\n");
+        $cli->send("select * from user");
     }
 });
 
@@ -25,7 +25,7 @@ $client->on("close", function($cli){
     echo "connection is closed\n";
 });		
 
-$client->connect('127.0.0.1', 9501, 0.5);
+$client->connect('127.0.0.1', 9502, 0.5);
 
 
 

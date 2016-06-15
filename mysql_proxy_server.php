@@ -1,7 +1,7 @@
 <?php
 class DBServer
 {
-    protected $pool_size = 20;
+    protected $pool_size = 2;
     protected $idle_pool = array(); //空闲连接
     protected $busy_pool = array(); //工作连接
     protected $wait_queue = array(); //等待的请求
@@ -14,38 +14,47 @@ class DBServer
 
     function run()
     {
-        $serv = new swoole_server("127.0.0.1", 9509);
+        $serv = new swoole_server("0.0.0.0", 9502);
         $serv->set(array(
             'worker_num' => 1,
             'max_request' => 0,
         ));
 
         $serv->on('WorkerStart', array($this, 'onStart'));
+        echo 777777;
         //$serv->on('Connect', array($this, 'onConnect'));
         $serv->on('Receive', array($this, 'onReceive'));
+        echo 888888;
         //$serv->on('Close', array($this, 'onClose'));
         $serv->start();
+        echo 9999999;
     }
 
     function onStart($serv)
     {
+        echo "1111\n";
         $this->serv = $serv;
         for ($i = 0; $i < $this->pool_size; $i++) {
             $db = new mysqli;
-            $db->connect('127.0.0.1', 'root', 'root', 'www4swoole');
+            $db->connect('127.0.0.1', 'swoole', 'swoole', 'swoole');
             $db_sock = swoole_get_mysqli_sock($db);
             swoole_event_add($db_sock, array($this, 'onSQLReady'));
+            echo 6;
             $this->idle_pool[] = array(
                 'mysqli' => $db,
                 'db_sock' => $db_sock,
                 'fd' => 0,
             );
         }
+        //var_dump($this->idle_pool);
+        echo count($this->idle_pool)."\n";
+        //var_dump($this->idle_pool);
         echo "Server: start.Swoole version is [" . SWOOLE_VERSION . "]\n";
     }
 
     function onSQLReady($db_sock)
     {
+        echo "4444\n";
         $db_res = $this->busy_pool[$db_sock];
         $mysqli = $db_res['mysqli'];
         $fd = $db_res['fd'];
@@ -77,10 +86,15 @@ class DBServer
 
     function onReceive($serv, $fd, $from_id, $data)
     {
-	echo "Received: $data\n";
+        echo "22222\n";
+    	echo "Received: $data\n";
+        echo "idle_pool";
+        echo count($this->idle_pool);
+        echo "\n";
+    //var_dump($this->idle_pool);
         //没有空闲的数据库连接
         
-	if (count($this->idle_pool) == 0) {
+	if (count($this->idle_pool) == 0) {//空闲连接
             //等待队列未满
             if (count($this->wait_queue) < $this->wait_queue_max) {
                 $this->wait_queue[] = array(
@@ -103,7 +117,7 @@ class DBServer
          * @var mysqli
          */
         $mysqli = $db['mysqli'];
-
+        //此部分是防止mysql链接断开，如果链接断开则重新连接
         for ($i = 0; $i < 2; $i++) {
             $result = $mysqli->query($sql, MYSQLI_ASYNC);
             if ($result === false) {
@@ -119,6 +133,7 @@ class DBServer
         $db['fd'] = $fd;
         //加入工作池中
         $this->busy_pool[$db['db_sock']] = $db;
+        echo 5555555;
     }
 }
 

@@ -26,7 +26,7 @@
 </head>
 <body style="zoom: 1;">
 <!--头部-->
-<div class="navbar navbar-fixed-top">
+<!-- <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
             <a class="brand" href="http://webim.swoole.com/">Swoole Chatting--技术测试项目</a>
@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="container">
     <div class="container">
@@ -47,15 +47,9 @@
             <!--主聊天区-->
             <div id="chat-column" class="span8 well">
 
-                <!--
-                <div id="chat-tool" style="height:100px;border:0px solid #ccc;">
-                    个人资料区
-                </div>
-                -->
-
                 <!--消息显示区-->
-                    <div id="chat-messages" style="border:0px solid #ccc;">
-                    <div class="message-container"></div>
+            <div id="chat-messages" style="border:0px solid #ccc;">
+                <div class="message-container"></div>
 
                 <div class="message-container">
                     <div class="userpic"></div>
@@ -112,7 +106,7 @@
                     <form id="msgform" class="form-horizontal post-form">
                         <div class="input-append">
                             <textarea id="msg_content" style="width:480px; height:80px;" rows="3" cols="500" contenteditable="true"></textarea>
-                            <img style="width:80px;height:90px;" onclick="sendMsg($(&#39;#msg_content&#39;).val(), &#39;text&#39;);" src="res/button.gif">
+                            <img style="width:80px;height:90px;" onclick="sendMsg($('#msg_content').val(), 'text');" src="res/button.gif">
                         </div>
                     </form>
                 </div>

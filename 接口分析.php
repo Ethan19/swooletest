@@ -426,6 +426,40 @@ swoole_event系列函数给了使用者操作底层事件循环的能力。这�
 
 
 
+process
+swoole_process->pop
+从队列中提取数据。
+
+array_pop — 将数组最后一个单元弹出（出栈）
+
+array_push
+
+(PHP 4, PHP 5, PHP 7)
+array_push — 将一个或多个单元压入数组的末尾（入栈）
+
+
+
+
+workess
+array(2) {
+  [3816]=>
+  object(swoole_process)#1 (2) {
+    ["callback"]=>
+    string(17) "callback_function"
+    ["pid"]=>
+    int(3816)
+  }
+  [3817]=>
+  object(swoole_process)#2 (2) {
+    ["callback"]=>
+    string(17) "callback_function"
+    ["pid"]=>
+    int(3817)
+  }
+}
+
+
+
 
 
 

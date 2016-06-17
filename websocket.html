@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <script type="text/javascript" src="swooleUI/res/jquery-1.11.1.js"></script>
   <script type="text/javascript">
-  var exampleSocket = new WebSocket("ws://192.168.169.184:9502");
+  var exampleSocket = new WebSocket("ws://192.168.169.184:9501");
   ab = exampleSocket.onopen = function (event) {
     //exampleSocket.send("hi i connect you "); 
   };
   exampleSocket.onmessage = function (event) {
+    console.log(event.data);
     html = "<div>"+event.data+"</div>";
     $("#data").append(html);
     //console.log(event.data);

@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://192.168.169.184:9502");
+var ws = new WebSocket("ws://192.168.169.184:9501");
 var client_id = 0;
 var userlist = {};
 var GET = getRequest();
@@ -43,7 +43,7 @@ function listenEvent() {
         console.log("connect webim server success.");
         //发送登录信息
         msg = new Object();
-        msg.cmd = 'login';
+        msg.type = 'login';
         // msg.name = GET['name'];
         // msg.avatar = GET['avatar'];
         ws.send($.toJSON(msg));
@@ -84,6 +84,7 @@ function listenEvent() {
         //     //delUser(cid);
         //     //showNewMsg(message);
         // }
+        console.log(e.data);
     };
 
     /**
@@ -100,6 +101,7 @@ function listenEvent() {
      * 异常事件
      */
     ws.onerror = function (e) {
+        console.log(e);
         alert("异常:" + e.data);
         console.log("onerror");
     };

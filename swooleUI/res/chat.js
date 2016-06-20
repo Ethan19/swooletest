@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://192.168.169.184:9501");
+var ws = new WebSocket("ws://192.168.169.164:9501");
 var client_id = 0;
 var userlist = {};
 var GET = getRequest();
@@ -84,25 +84,45 @@ function listenEvent() {
         //     //delUser(cid);
         //     //showNewMsg(message);
         // }
-        console.log(e.data);
+        //console.log(typeof(e.data));
+        //console.log(e.data);
+        var data = $.parseJSON(e.data);
+        
+        if(data.type == "login" || data.type == "close"){
+            $("#talk").append("<div class='content'><span style='color: green'>系统消息：</span>"+data.msg+"</div>");
+        }else if(data.type == "userlist"){
+            var str = "";
+            $.each(data.msg ,function(i, v) {
+                str += "<li id='inroom_3439'>"+v+"</li>";
+            });
+            $("#left-userlist").empty();
+            $("#left-userlist").append(str);
+        }else if(data.type == "msg"){
+            console.log(3333);
+        }
+
+
     };
 
     /**
      * 连接关闭事件
      */
     ws.onclose = function (e) {
-        if (confirm("聊天服务器已关闭")) {
-            //alert('您已退出聊天室');
-            location.href = 'a.html';
-        }
+        //console.log(e);
+        console.log("聊天服务器已经关闭");
+        // if (confirm("聊天服务器已关闭")) {
+        //     //alert('您已退出聊天室');
+        //     location.href = 'a.html';
+        // }
     };
 
     /**
      * 异常事件
      */
     ws.onerror = function (e) {
-        console.log(e);
-        alert("异常:" + e.data);
+        //console.log(e);
+        //console.log("异常");
+        //alert("异常:" + e.data);
         console.log("onerror");
     };
 }
@@ -327,24 +347,30 @@ function sendMsg(content, type) {
     if (!content) {
         return false;
     }
-
-    if ($('#userlist').val() == 0) {
         msg.cmd = 'message';
-        msg.from = client_id;
-        msg.channal = 0;
-        msg.data = content;
-        // msg.type = type;
-        ws.send($.toJSON(msg));
-    }
-    else {
-        msg.cmd = 'message';
-        msg.from = client_id;
+        // msg.from = client_id;
         msg.to = $('#userlist').val();
         msg.channal = 1;
         msg.data = content;
         msg.type = type;
         ws.send($.toJSON(msg));
-    }
+    // if ($('#userlist').val() == 0) {
+    //     msg.cmd = 'message';
+    //     msg.from = client_id;
+    //     msg.channal = 0;
+    //     msg.data = content;
+    //     // msg.type = type;
+    //     ws.send($.toJSON(msg));
+    // }
+    // else {
+    //     msg.cmd = 'message';
+    //     // msg.from = client_id;
+    //     msg.to = $('#userlist').val();
+    //     msg.channal = 1;
+    //     msg.data = content;
+    //     msg.type = type;
+    //     ws.send($.toJSON(msg));
+    // }
     showNewMsg(msg);
     $('#msg_content').val('')
 }

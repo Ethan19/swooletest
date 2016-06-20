@@ -110,7 +110,7 @@ li.user-online img {
 
 #left-userlist li {
 /*	float: left;*/
-    height: 60px;
+/*    height: 60px;*/
     list-style: none outside none;
     margin-top: 10px;
     width: 60px;

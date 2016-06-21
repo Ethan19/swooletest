@@ -219,63 +219,63 @@ function showNewMsg(dataObj) {
         content = '<br /><a href="' + image.url + '" target="_blank"><img src="' + image.thumb + '" /></a>';
     }
 
-    var fromId = dataObj.from;
-    var channal = dataObj.channal;
+    // var fromId = dataObj.from;
+    // var channal = dataObj.channal;
 
-    content = parseXss(content);
-    var said = '';
-    var time_str;
+    // content = parseXss(content);
+    // var said = '';
+    // var time_str;
 
-    if (dataObj.time) {
-        time_str = GetDateT(dataObj.time)
-    } else {
-        time_str = GetDateT()
-    }
+    // if (dataObj.time) {
+    //     time_str = GetDateT(dataObj.time)
+    // } else {
+    //     time_str = GetDateT()
+    // }
 
-    $("#msg-template .msg-time").html(time_str);
-    if (fromId == 0) {
-        $("#msg-template .userpic").html("");
-        $("#msg-template .content").html(
-            "<span style='color: green'>【系统消息】</span>" + content);
-    }
-    else {
-        var html = '';
-        var to = dataObj.to;
+    // $("#msg-template .msg-time").html(time_str);
+    // if (fromId == 0) {
+    //     $("#msg-template .userpic").html("");
+    //     $("#msg-template .content").html(
+    //         "<span style='color: green'>【系统消息】</span>" + content);
+    // }
+    // else {
+    //     var html = '';
+    //     var to = dataObj.to;
 
-        //历史记录
-        if (channal == 3)
-        {
-            said = '对大家说:';
-            html += '<span style="color: green">【历史记录】</span><span style="color: orange">' + dataObj.user.name + said;
-            html += '</span>';
-        }
-        //如果说话的是我自己
-        else {
-            if (client_id == fromId) {
-                if (channal == 0) {
-                    said = '我对大家说:';
-                }
-                else if (channal == 1) {
-                    said = "我悄悄的对" + userlist[to] + "说:";
-                }
-                html += '<span style="color: orange">' + said + ' </span> ';
-            }
-            else {
-                if (channal == 0) {
-                    said = '对大家说:';
-                }
-                else if (channal == 1) {
-                    said = "悄悄的对我说:";
-                }
+    //     //历史记录
+    //     if (channal == 3)
+    //     {
+    //         said = '对大家说:';
+    //         html += '<span style="color: green">【历史记录】</span><span style="color: orange">' + dataObj.user.name + said;
+    //         html += '</span>';
+    //     }
+    //     //如果说话的是我自己
+    //     else {
+    //         if (client_id == fromId) {
+    //             if (channal == 0) {
+    //                 said = '我对大家说:';
+    //             }
+    //             else if (channal == 1) {
+    //                 said = "我悄悄的对" + userlist[to] + "说:";
+    //             }
+    //             html += '<span style="color: orange">' + said + ' </span> ';
+    //         }
+    //         else {
+    //             if (channal == 0) {
+    //                 said = '对大家说:';
+    //             }
+    //             else if (channal == 1) {
+    //                 said = "悄悄的对我说:";
+    //             }
 
-                html += '<span style="color: orange"><a href="javascript:selectUser('
-                    + fromId + ')">' + userlist[fromId] + said;
-                html += '</a></span> '
-            }
-        }
-        html += content + '</span>';
-        $("#msg-template .content").html(html);
-    }
+    //             html += '<span style="color: orange"><a href="javascript:selectUser('
+    //                 + fromId + ')">' + userlist[fromId] + said;
+    //             html += '</a></span> '
+    //         }
+    //     }
+    //     html += content + '</span>';
+    //     $("#msg-template .content").html(html);
+    // }
     $("#chat-messages").append($("#msg-template").html());
     $('#chat-messages')[0].scrollTop = 1000000;
 }
@@ -347,12 +347,13 @@ function sendMsg(content, type) {
     if (!content) {
         return false;
     }
-        msg.cmd = 'message';
+    console.log(content);
+        msg.type = 'message';
         // msg.from = client_id;
-        msg.to = $('#userlist').val();
-        msg.channal = 1;
+        // msg.to = $('#userlist').val();
+        // msg.channal = 1;
         msg.data = content;
-        msg.type = type;
+        // msg.type = type;
         ws.send($.toJSON(msg));
     // if ($('#userlist').val() == 0) {
     //     msg.cmd = 'message';

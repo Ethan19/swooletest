@@ -98,7 +98,11 @@ function listenEvent() {
             $("#left-userlist").empty();
             $("#left-userlist").append(str);
         }else if(data.type == "msg"){
-            console.log(3333);
+            console.log(data);
+            $("#msg-template .content").html(data.msg);
+            $("#chat-messages").append($("#msg-template").html());
+            $('#chat-messages')[0].scrollTop = 1000000;
+            
         }
 
 
@@ -372,7 +376,7 @@ function sendMsg(content, type) {
     //     msg.type = type;
     //     ws.send($.toJSON(msg));
     // }
-    showNewMsg(msg);
+    //showNewMsg(msg);
     $('#msg_content').val('')
 }
 

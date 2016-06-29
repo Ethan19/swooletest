@@ -49,7 +49,8 @@ $server->on('message', function (swoole_websocket_server $server, $frame){//接�
         //获取用户列表
         getListUser($server,$fd);
     }elseif($data->type == "message"){
-
+        echo "msg=".$data->type."\n";
+        addMsg(array("content"=>$data->data,"user-id"=>"user-".$frame->fd),$server);
     }
 
 
@@ -128,4 +129,39 @@ function msg($server,$type,$user){
             }
         });
     });   
+}
+
+
+function addMsg($arr,$server){
+    var_dump($arr);
+    if($arr['content']){
+        $content = $arr['content'];
+    }
+    if($arr['user-id']){
+        $fd = $arr['user-id'];
+    }
+    $sql = "INSERT INTO message(content,fd) VALUES('{$content}','{$fd}')";
+    echo $sql."\n";
+    $db = new mysqli;
+    $db->connect('127.0.0.1', 'swoole', 'swoole', 'swoole');//用户名、密码、库名均为swoole
+    $db->query($sql, MYSQLI_ASYNC);
+    swoole_event_add(swoole_get_mysqli_sock($db), function($db_sock) use($db){
+        //var_dump($db->_insert_id);
+        $res = $db->reap_async_query();//获取查询结构
+        // var_dump($res->fetch_all(MYSQLI_ASSOC));
+        swoole_event_del(swoole_get_mysqli_sock($db)); // socket处理完成后，从epoll事件中移除socket 
+    });
+    //向各个用户发送消息
+    $redis  = new swoole_redis;
+    $redis->connect('127.0.0.1',6379,function(swoole_redis $redis, $result) use($arr,$server){
+        $redis->keys("user-*",function(swoole_redis $client,$result) use($arr,$server){
+            var_dump($result);
+            for($i=0;$i<count($result);$i++){
+                $cliendId = str_replace("user-" , "", $result[$i]);//获取在线用户，发送消息
+                $data = array("type"=>"msg","msg"=>$arr['user-id']."对大家说：".$arr['content']);
+                $server->push($cliendId,json_encode($data));
+            }
+        });
+    });
+
 }
